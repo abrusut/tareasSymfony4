@@ -1,0 +1,14 @@
+Si es un proyecto nuevo agregar a la instalacion default el pack para apache
+Sino no andan las rutas en el local
+    composer require symfony/apache-pack
+
+Importar y generar entidades desde una base de datos.
+
+    php bin/console doctrine:mapping:import App\\Entity annotation --path=./src/Entity/
+
+Generar getter y setter
+    php bin/console make:entity --regenerate
+
+Generar Controlador
+    php bin/console make:controller TaskController
+    php bin/console make:controller UserController
