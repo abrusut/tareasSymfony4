@@ -65,8 +65,8 @@ class User
      */
     private $createdAt;
 
-    /*
-    * @ORM\OnToMany(targetEntity='App\Entity\Task', mappedBy="user")
+    /**    
+    * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
     */
     private $tasks;
 
@@ -155,9 +155,19 @@ class User
      * @return Collection | Task[]
      */
     public function getTasks(): Collection
-    {
+    {       
         return $this->tasks;
+    }    
+
+    /**
+     * Set the value of tasks
+     *
+     * @return  self
+     */ 
+    public function setTasks($tasks)
+    {
+        $this->tasks = $tasks;
+
+        return $this;
     }
-
-
 }
