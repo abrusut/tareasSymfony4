@@ -12,9 +12,17 @@ use Doctrine\ORM\EntityManagerInterface;
 class TaskController extends AbstractController
 {
     /**
-     * @Route("/task", name="task")
+     * @Route("/", name="index_task")
      */
     public function index(EntityManagerInterface $em)
+    {   
+        return $this->tasks($em);
+    }
+
+    /**
+     * @Route("/task", name="task")
+     */
+    public function tasks(EntityManagerInterface $em)
     {
         $taskRepository = $this->getDoctrine()->getRepository(Task::class);
 
@@ -22,7 +30,7 @@ class TaskController extends AbstractController
 
         foreach($tareas as $tarea)
         {
-            echo $tarea->getUser()->getEmail()." : ".$tarea->getTitle()."<br/>";
+          //  echo $tarea->getUser()->getEmail()." : ".$tarea->getTitle()."<br/>";
         }
 
 
@@ -30,11 +38,11 @@ class TaskController extends AbstractController
         $usuarios = $userRepository->findAll();
         foreach($usuarios as $usuario)
         {
-            echo "<h3> {$usuario->getName()} {$usuario->getSurName()} </h3>";
+           // echo "<h3> {$usuario->getName()} {$usuario->getSurName()} </h3>";
             
             foreach($usuario->getTasks() as $tarea)
             {
-                 echo $tarea->getTitle()."<br/>";
+             //    echo $tarea->getTitle()."<br/>";
             }
             
         }

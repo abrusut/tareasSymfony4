@@ -5,14 +5,21 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Events;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Symfony\Component\Validator\Constraints as Asserts;
 
 /**
  * Users
  *
  * @ORM\Table(name="users")
  * @ORM\Entity
+ * @Entity @HasLifecycleCallbacks 
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int
@@ -34,6 +41,8 @@ class User
      * @var string|null
      *
      * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     * @Asserts\NotBlank
+     * @Asserts\Regex("/[a-zA-Z ]+/")
      */
     private $name;
 
@@ -41,6 +50,8 @@ class User
      * @var string|null
      *
      * @ORM\Column(name="surname", type="string", length=45, nullable=true)
+     * @Asserts\NotBlank
+     * @Asserts\Regex("/[a-zA-Z ]+/")
      */
     private $surname;
 
@@ -48,13 +59,19 @@ class User
      * @var string|null
      *
      * @ORM\Column(name="email", type="string", length=45, nullable=true)
+     * @Asserts\NotBlank
+     * @Asserts\Email(
+     *      message="El email '{{ value }}' no es valido",
+     *      checkMX=true
+     * )
      */
     private $email;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="password", type="string", length=45, nullable=true)
+     * @ORM\Column(name="password", type="string", length=45, nullable=true)  
+     * @Asserts\NotBlank   
      */
     private $password;
 
@@ -72,6 +89,12 @@ class User
 
     public function __construct(){
         $this->tasks = new ArrayCollection();
+    }
+
+    /** @PrePersist */
+    public function doOnPrePersist()
+    {
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -170,4 +193,25 @@ class User
 
         return $this;
     }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getRoles()
+    {
+        return array("ROLE_USER");
+    }
+
+    public function eraseCredentials()
+    {
+        
+    }
+
 }

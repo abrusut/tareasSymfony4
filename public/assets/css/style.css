@@ -1,0 +1,95 @@
+body{
+    background: white;
+}
+
+.example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+.example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+input[type="text"],
+input[type="password"],
+input[type="email"]{
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    padding: 8px;
+}
+
+label{
+    display: block;
+    width: 80%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+
+}
+button,
+input[type="submit"]{
+    padding: 15px;
+    margin-top: 15px;
+    background: rgb(4, 196, 36);
+    color: white;
+    border: 1px solid;
+    cursor: pointer;    
+    transition: all 300ms;
+}
+
+button:hover,
+input[type="submit"]:hover{
+    background: rgb(4, 119, 23);    
+}
+
+.header{
+    margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif;
+}
+
+#menu li.right{
+    float: right; 
+    border-right: 0px;
+    border-left: 1px solid #ccc;
+}
+
+#menu{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    background: rgb(240, 231, 231);
+    width: 100%;
+    height: 50%;
+    line-height: 50px;
+}
+
+#menu li{
+    display: block;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #ccc;
+    cursor: pointer;
+}
+
+#menu li:hover{
+    background: #444;
+    color: white;
+    transition: all 300ms;
+}
+
+#menu li:hover a{    
+    color: white;    
+    transition: all 300ms;
+}
+
+#menu a{
+    color: #444;
+    text-decoration: none;
+    display: block;
+}
+
+#menu a{
+    color: #444;
+    text-decoration: none;
+}
+
+.clearfix{
+    float: none;
+    clear: both;
+}
+

@@ -27,6 +27,9 @@ ADD CONSTRAINT `fk_tasks_users`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
+ALTER TABLE `tareasSymfony4`.`users` 
+CHANGE COLUMN `password` `password` VARCHAR(255) NULL DEFAULT NULL ;
+
 
 use tareasSymfony4;
 insert into users values(null,'ROLE_USER','Andres', 'BRUSUTTI','andresbrusutti@gmail.com',
