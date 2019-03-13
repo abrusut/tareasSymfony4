@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
 
 /**
  * Tasks
  *
  * @ORM\Table(name="tasks", indexes={@ORM\Index(name="fk_tasks_users_idx", columns={"user_id"})})
  * @ORM\Entity
+ * @Entity @HasLifecycleCallbacks
  */
 class Task
 {
@@ -66,82 +70,86 @@ class Task
      */
     private $user;
 
-    public function getId(): ?int
+    /** @PrePersist */
+    public function doOnPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function getId(): ? int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): ? string
     {
         return $this->title;
     }
 
-    public function setTitle(?string $title): self
+    public function setTitle(? string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getContent(): ? string
     {
         return $this->content;
     }
 
-    public function setContent(?string $content): self
+    public function setContent(? string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function getPriority(): ?string
+    public function getPriority(): ? string
     {
         return $this->priority;
     }
 
-    public function setPriority(?string $priority): self
+    public function setPriority(? string $priority): self
     {
         $this->priority = $priority;
 
         return $this;
     }
 
-    public function getHours(): ?int
+    public function getHours(): ? int
     {
         return $this->hours;
     }
 
-    public function setHours(?int $hours): self
+    public function setHours(? int $hours): self
     {
         $this->hours = $hours;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ? \DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    public function setCreatedAt(? \DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ? User
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(? User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
-
-
 }

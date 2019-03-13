@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityManager;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\TaskType;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TaskController extends AbstractController
 {
@@ -20,35 +23,70 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @Route("/task/user", name="taskByUser")
+     */
+    public function myTasks(UserInterface $user)
+    {        
+        $tasks = $user->getTasks();
+       
+        return $this->render('task/my-tasks.html.twig', [            
+            'tasks' => $tasks
+        ]);
+    }
+
+
+    /**
      * @Route("/task", name="task")
      */
     public function tasks(EntityManagerInterface $em)
     {
         $taskRepository = $this->getDoctrine()->getRepository(Task::class);
 
-        $tareas = $taskRepository->findAll();
-
-        foreach($tareas as $tarea)
-        {
-          //  echo $tarea->getUser()->getEmail()." : ".$tarea->getTitle()."<br/>";
-        }
-
-
-        $userRepository = $this->getDoctrine()->getRepository(User::class);
-        $usuarios = $userRepository->findAll();
-        foreach($usuarios as $usuario)
-        {
-           // echo "<h3> {$usuario->getName()} {$usuario->getSurName()} </h3>";
-            
-            foreach($usuario->getTasks() as $tarea)
-            {
-             //    echo $tarea->getTitle()."<br/>";
-            }
-            
-        }
-
-        return $this->render('task/index.html.twig', [
-            'controller_name' => 'TaskController',
+        $tasks = $taskRepository->findBy([], ['id' => 'DESC']);
+       
+        return $this->render('task/index.html.twig', [            
+            'tasks' => $tasks
         ]);
     }
+
+    /**
+     * @Route("/task/detail/{id}", name="taskDetail")
+     */
+    public function tasksDetail(Task $task = null)
+    {   
+        if(!$task)
+        {
+            return $this->redirectToRoute('index_task');
+        }
+        return $this->render('task/taskDetail.html.twig', [            
+            'task' => $task
+        ]);
+    }
+
+    /**
+     * @Route("/task/create", name="taskCreate")
+     */
+    public function tasksCreate(Request $request, EntityManagerInterface $em,
+                        UserInterface $user)
+    {  
+        $task = new Task();
+        $form =  $this->createForm(TaskType::class,$task);
+
+        // bindea el request con el objeto user
+        // $form->isValid Valida los datos con las anotaciones de Assert en el objeto
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $task->setUser($user);
+            $em->persist($task);
+            $em->flush();
+            return $this->redirect(
+                $this->generateUrl('taskDetail', ['id' => $task->getId()])
+            );
+        }
+        return $this->render('task/taskCreate.html.twig', [            
+            'form' => $form->createView()
+        ]);
+    }
+
 }

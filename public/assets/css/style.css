@@ -7,7 +7,9 @@ body{
 
 input[type="text"],
 input[type="password"],
-input[type="email"]{
+input[type="email"],
+textarea,
+select{
     width: 70%;
     padding: 10px;
     font-size: 16px;
@@ -51,7 +53,7 @@ input[type="submit"]:hover{
     list-style: none;
     margin: 0px;
     padding: 0px;
-    background: rgb(240, 231, 231);
+    background-color: #EDEDED !important;
     width: 100%;
     height: 50%;
     line-height: 50px;
@@ -93,3 +95,45 @@ input[type="submit"]:hover{
     clear: both;
 }
 
+table{
+    width: 100%;
+}
+
+table th,
+table td{
+    padding: 15px;
+    padding-right: 25px;
+    padding-left: 25px;
+    background: #eee;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+table td{
+    background: #e9ffea;
+}
+.buttons{
+    width: 33% !important;
+}
+.buttons a {
+    text-decoration: none;
+    border:1px solid green;
+    padding: 10px !important;  
+    margin-right: 5px;  
+    color:white;
+    background: rgb(50, 206, 3)
+}
+
+
+.buttons .btn-edit{
+    background: orange;
+    border-color: rgb(248, 170, 97)
+}
+
+.buttons .btn-delete{
+ background: red;   
+ border-color: rgb(248, 97, 97)
+}
+.data-task{
+    color: gray
+}
