@@ -1,9 +1,13 @@
+ {% block stylesheets %}
+            <link href="{{ asset ('assets/css/style.css') }}" type="text/css" rel="stylesheet"/>
+        {% endblock %}
 {% if tasks |length >= 1 %}
 <table>
         <tr>
             <th>Tarea</th>
             <th>Prioridad</th>
             <th>Horas Presupuestadas</th>
+            <th>Usuario</th>
             <th>Acciones</th>
         </tr>
         {% for task in tasks %}
@@ -21,10 +25,15 @@
             {% endif %}
             </td>
             <td>{{ task.hours }}</td>
+            <td>{{ task.user.name }}</td>
             <td  class="buttons">
                 <a class="btn-view" href="{{ path('taskDetail', {'id':task.id} ) }}" /> Ver </a>
-                <a  class="btn-edit" href="" /> Editar </a>
-                <a  class="btn-delete" href="" /> Eliminar </a>
+                
+
+                {% if task.user.id == app.user.id %}
+                    <a  class="btn-edit" href="{{ path('taskEdit', {'id':task.id} ) }}" /> Editar </a>
+                    <a  class="btn-delete" href="{{ path('taskDelete', {'id':task.id} ) }}" /> Eliminar </a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

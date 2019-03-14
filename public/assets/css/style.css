@@ -114,6 +114,7 @@ table td{
 }
 .buttons{
     width: 33% !important;
+    text-align: none;
 }
 .buttons a {
     text-decoration: none;
